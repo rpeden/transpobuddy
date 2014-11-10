@@ -1,0 +1,37 @@
+<script type ="text/javascript" src="/js/itranspo_desktop.js"></script>
+
+<div class="container">
+	<div class="row">
+		<div class="span12" id="title">
+			transpo<span id="title-2">buddy</span>
+		</div>
+		<div class="span12" id="tagline">
+			the quickest way to browse OC Transpo schedules.
+		</div>
+	</div>
+	<div class="row" id="addressrow">
+		<div class="span4" id="addressnotice">Enter an address to find nearby stops:</div>
+		<div class="span4">
+			<input class="span4" id="address" type="text" placeholder="enter address" />
+		</div>
+		<div class="span2">
+			<button class="btn btn-info" id="stops">
+				Find Stops
+			</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span8" id="map_canvas"></div>
+		<div class="span4" id="buses">
+			Click on a stop to load bus times.
+		</div>
+	</div>
+	<div class="row">
+		<div class="span8" id="mapnotice">
+			Click on any bus stop to load upcoming buses.
+		</div>
+	</div>
+	<script type="text/javascript">
+		Map.createmap();
+	</script>
+</div>

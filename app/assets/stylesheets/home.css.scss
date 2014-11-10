@@ -1,0 +1,60 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+	background-color: #1F60A6;
+	color: white;
+}
+
+$mapheight: 450px;
+
+#title{
+	color: white;
+	font-size: 27pt;
+	font-family: 'Electrolize';
+	margin-top: 15px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+#title-2{
+	color: lightblue;
+}
+
+#tagline{
+	color: white;
+	text-align: center;	
+}
+
+#addressrow{
+	margin-top: 20px;
+}
+
+#addressnotice{
+	padding-top: 5px;
+	text-align: right;
+}
+
+#map_canvas{
+	height: $mapheight;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+
+#buses{
+	height: $mapheight;
+	background-color: white;
+	color: black;
+	text-align: center;
+	overflow: scroll;
+}
+
+#stops{
+	margin-left: 0px;	
+}
+
+#mapnotice{
+	margin-top: 10px;
+	text-align: center;
+}

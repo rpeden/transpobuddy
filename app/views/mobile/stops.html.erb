@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<script type ="text/javascript" src="/js/itranspo.js"></script>
+<!--<script src="/iwebkit/javascript/functions.js" type="text/javascript"></script> -->
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
+<link href="/iwebkit/css/style.css" rel="stylesheet" media="screen" type="text/css" />
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.setOnLoadCallback(initialize);
+google.load("jquery", "1.4.2");
+google.load("maps", "3", {other_params: "sensor=true"});
+
+function initialize() {
+	
+	$('document').ready(function() {
+		$('#address').css({maxWidth: $('#location').innerWidth() - 41});
+		$('#content').css({ height: $('body').height() - $('#topbar').height()});
+		$('#startaddress').keypress(function(e) {
+			var code = e.keyCode ? e.keyCode : e.which;		  
+			if (code.toString() == 13) {
+		    //e.preventDefault();
+		     $('#showmap').click();
+		     //dismiss iPhone keyboard after address submitted
+		     $(this).blur();
+		   }
+		});
+		
+		$('#showmap').bind('click',function() {
+			//$('body').addClass('ipodlist');
+			var start_address = $('#startingaddress').attr('value');
+			if(start_address != "") {
+				//get the address coordinates
+				var address = $('#startaddress').attr('value');
+				geocode(address);
+			} else {
+				//user wants to use geolocation or default location, so just load the map
+				Map.createmap();
+			}//end if
+			$('#location').addClass('hidden');
+			$('#location').removeClass('visible');
+			$('#content').css({ height: $('body').height() - $('#topbar').height() });
+			$('#map_canvas').removeClass('hidden');
+			
+		});//end onclick function 
+
+		window.addEventListener("popstate", function(e){
+			$('#stop_times').addClass('hidden');
+			$('#stop_times').removeClass('visible');
+			$('#content').css({ height: $('body').height() - $('#topbar').height() });
+			$('#map_canvas').css({ height: $('#content').height()});
+			$('#map_canvas').removeClass('hidden');
+			$('#leftnav a').html("Home");
+			$('#leftnav a').attr('href', '/');
+			$('#leftnav').unbind('click');
+			$('#title').html("Stops");
+			window.scrollTo(0,1);
+		});
+	});
+    
+	
+	if(navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(geoHandler);
+		return;
+	} else if(window.google.gears) {
+		$.getScript('gears_init.js', function() {
+			var geo = google.gears.factory.create('beta.geolocation');
+			geo.getCurrentPosition(geoHandler, null);
+			return;
+		});
+	} else {
+		
+		$(".geo").html("Geolocation unavailable. Please enter a starting address.");
+		$('#address').removeClass('hidden');
+		return;
+	}
+	
+}
+
+function geoHandler(location) {
+		
+	//Map.setLatLng(location.coords.latitude, location.coords.longitude);
+	if(inOttawa(location.coords.latitude, location.coords.longitude)){
+		$(".geo").html("Geolocation available!");
+		$(".geo").append("<br />Latitude: " + Map.latitude.toFixed(4) + "<br />Longitude: " + Map.longitude.toFixed(4)
+					+ "<br />Click 'Find Stops' to use geolocation, or enter an address below."); 
+		Map.latitude = location.coords.latitude;
+		Map.longitude = location.coords.longitude;
+	} else {
+		$(".geo").html("Geolocation is available, but you don't appear to be in Ottawa. Please enter "
+						+ "an address or press 'Find Stops' to browse downtown Ottawa.");
+	}
+}
+
+//check to see if geolocated location is in Ottawa
+function inOttawa(latitude, longitude){
+	return Math.floor(latitude) === 45 && Math.ceil(longitude) === -75
+}
+function geocode(address) {
+	var geocoder = new google.maps.Geocoder();
+	geocoder.geocode({ 'address' : address + ",Ottawa, Ontario"},
+					function (result, status) {
+						if(status == google.maps.GeocoderStatus.OK) {
+							Map.latitude = result[0].geometry.location.lat();
+							Map.longitude = result[0].geometry.location.lng();
+							Map.createmap();
+						} else {
+							alert("Geocoder failed. Reason: " + status);
+					}});
+}
+function reverseGeocode(latitude, longitude){
+
+}
+</script>
+<script src="/iwebkit/javascript/functions.js" type="text/javascript"></script>
+
+
+<title>Bus Stops</title>
+
+<style type="text/css">
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+}
+#topbar {
+	margin-bottom: 0px !important;
+}
+#map_canvas {
+	height: 100%;
+}
+.hidden {
+   	position: absolute;
+	left: -10000px;
+}
+.visible {
+	position: relative;
+}
+#content {
+	margin-top: 0;
+}
+#stop_times {
+	position: relative;
+}
+#content #stop_times #buses {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+#buses td {
+	padding-right: 0.1em;
+	padding-left: 0.2em;
+}
+</style>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+
+<div id="topbar">
+	<div id="title">Stops</div>
+	<div id="leftnav"> 
+		<a href="/">Home</a> </div> 
+	</div>
+<div id="content">
+	<div id="location" class="visible">
+		<ul class = "pageitem">
+			<li class="textbox">
+				<span class="header">Geolocation</span>
+				<p class="geo"></p>
+			</li>
+			<fieldset>
+			<ul class="pageitem">
+			<li class="bigfield" id ="address"><input id="startaddress" value="" placeholder="Starting Address" type="text" /></li>
+			</ul>
+			</fieldset>
+			
+			<li class="menu"><a id="showmap" href="#map_canvas">
+			<img alt="list" src="/iwebkit/thumbs/bus.png" /><span class="name">Find Stops</span><span class="arrow"></span></a></li>	
+		    </ul>
+		    
+	</div>
+	<div id="map_canvas" class="hidden"></div>
+	<div id="stop_times" class="hidden">
+		<ul id ='bus_info' class='pageitem'>
+			<li class='textbox'>
+				<p><table id='buses'></table></p>
+			</li>
+		</ul>
+	</div>	
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-5655083-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+
+</html>

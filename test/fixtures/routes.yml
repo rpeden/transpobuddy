@@ -1,0 +1,19 @@
+1:
+  route_id: "1"
+  route_short_name: "Downtown"
+
+2:
+  route_id: "2"
+  route_short_name: "Uptown"
+
+3:
+  route_id: "3"
+  route_short_name: "Country"
+
+4:
+  route_id: "4"
+  route_short_name: "Moon"
+
+5:
+  route_id: "5"
+  route_short_name: "Mars"

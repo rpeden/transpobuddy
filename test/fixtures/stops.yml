@@ -1,0 +1,59 @@
+one:
+  stop_id: 1
+  stop_name: stop1
+  stop_lat: 1.0
+  stop_lon: 1.0
+
+two:
+  stop_id: 2
+  stop_name: stop2
+  stop_lat: 2.0
+  stop_lon: 2.0
+
+three:
+  stop_id: 3
+  stop_name: stop3
+  stop_lat: 3.0
+  stop_lon: 3.0
+
+four:
+  stop_id: 4
+  stop_name: stop4
+  stop_lat: 4.0
+  stop_lon: 4.0
+
+five:
+  stop_id: 5
+  stop_name: stop5
+  stop_lat: 5.0
+  stop_lon: 5.0
+
+six:
+  stop_id: 6
+  stop_name: stop6
+  stop_lat: 6.0
+  stop_lon: 6.0
+
+seven:
+  stop_id: 7
+  stop_name: stop7
+  stop_lat: 7.0
+  stop_lon: 7.0
+
+eight:
+  stop_id: 8
+  stop_name: stop8
+  stop_lat: 8.0
+  stop_lon: 8.0
+
+nine:
+  stop_id: 9
+  stop_name: stop9
+  stop_lat: 9.0
+  stop_lon: 9.0
+
+ten:
+  stop_id: 10
+  stop_name: stop10
+  stop_lat: 10.0
+  stop_lon: 10.0
