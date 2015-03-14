@@ -14,7 +14,7 @@ class StopTime < ActiveRecord::Base
                                and (st.departure_time >= ?)
                                and (tr.service_id = ?)
                                order by st.departure_time asc
-                               limit 15",
+                               limit 50",
                                stop_id, current_time, day_type]
   	end
 
